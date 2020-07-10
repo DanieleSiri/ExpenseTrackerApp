@@ -1,0 +1,101 @@
+.home {
+    font-family: 'Impact', 'Charcoal', monospace;
+    font-size: 30px;
+    color: #FF0000;
+}
+
+.hello{
+    font-family: "Courier New", Courier, monospace;
+    font-size: 30px;
+    width: auto;
+    text-align: center;
+    padding: 5px;
+    color: #ff1a1a;
+}
+
+.index {
+    background-color: #80BFFF;
+}
+
+.index_div {
+    width = 33%;
+    display: inline-block;
+    padding: 30px;
+}
+
+.index_text {
+    font-size: 20px;
+    color: #003300;
+}
+
+.wrapper {
+    width: 50%;
+    margin: auto;
+    font-family: 'Garamond', 'Georgia', serif;
+    font-size: 17px;
+}
+
+.db_table {
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    font-size: 20px;
+}
+
+.t01 {
+    font-size: 20px;
+    background-color: #B2B1B1;
+}
+
+.t02 {
+    font-size: 20px;
+    background-color: #ffffff;
+    border: 2px solid black;
+    border-collapse: collapse;
+}
+
+.row  {
+    display: inline-block;
+}
+
+.col {
+    display: inline-block;
+    float: right;
+    padding: 1em;
+}
+
+.button {
+    font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+    font-size: 15px;
+    color: #000080;
+    background-color: #FFFF00;
+}
+
+.info {
+  background-color: #e7f3fe;
+  border-left: 6px solid #2196F3;
+}
+
+.modify-text {
+    font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+    font-size: 15px;
+    color: #0300fc;
+}
+
+.mod_row {
+    display: inline-block;
+    width: 80px;
+    height: 10px;
+}
+
+.text {
+    font-family: 'Garamond', 'Georgia', serif;
+    font-size: 20px;
+    background-color: #bddaff;
+    color: #fc0000;
+    border-left: 6px solid #f3fc00;
+}
+
+.ind_row {
+    display: inline-block;
+    width: 50px;
+    height: 5px;
+}

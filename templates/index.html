@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome to my App!</title>
+</head>
+<body class="index">
+<div class="hello">
+    <h1>Hello {{ username }}!</h1>
+    <h1>welcome to your expense tracker app</h1>
+</div>
+<center>
+<div style="width: 75%">
+    <div class="index_div">
+        <a href="{{ username }}/database" class="index_text">Bring me to my database</a>
+    </div>
+    <div class="index_div">
+        <a href="{{ username }}/global-statistics" class="index_text">Show global statistics</a>
+    </div>
+    <div class="index_div">
+        <a href="{{ username }}/modify" class="index_text">Go to insert/delete mode</a>
+    </div>
+</div>
+</center>
+<div>
+    <p style="color: #0000ff; font-size: 20px">This month's current expense: {{ expense }}</p>
+</div>
+<div>
+    <h1 style="font-size: 20px; border-left: 6px solid black; background-color: #e5e2e2; width: 150px; padding: 2px">Search collection</h1>
+<form method="POST" action="">
+    <div>
+        <div class="ind_row">
+            <p><strong>Month</strong></p>
+        </div>
+        <div class="ind_row">
+            <input type = "text" name = "month" placeholder="es. January">
+        </div>
+    <div>
+        <div class="ind_row">
+            <p><strong>Year</strong></p>
+        </div>
+        <div class="ind_row">
+            <input type = "text" name = "year" placeholder="es. 2020">
+        </div>
+    </div>
+    </div>
+    <input type="checkbox" id="global" name="global" value="True">
+    <label for="global">Show only global statistics</label>
+    <input type="submit" name="collection" value="Submit Collection Query">
+</form>
+</div>
+{% if ( coll_s and ( not global_s ) ) %}
+<div>
+    <center>
+    <table>
+        <tr>
+            <th class="db_table">EXPENSE</th>
+            <th class="db_table">DAY</th>
+            <th class="db_table">DESCRIPTION</th>
+            <th class="db_table">TIME OF INSERTION</th>
+        </tr>
+    {% for doc in coll_list.find_doc(coll_s, find_all=True) %}
+        <tr>
+            <td class="t02">{{ doc['expense'] }}</td>
+            <td class="t02">{{ doc['day'] }}</td>
+            <td class="t02">{{ doc['description'] }}</td>
+            <td class="t02">{{ doc['time of insertion'] }}</td>
+        </tr>
+    {% endfor %}
+    </table>
+    </center>
+</div>
+{% endif %}
+{% if ( query and coll_list.find_doc('Global_Statistics', query) ) %}
+<div>
+    <center>
+    <table>
+        <tr>
+            <th class="db_table">TOTAL EXPENSE</th>
+        </tr>
+        <tr>
+            <td class="t02">{{ coll_list.find_doc('Global_Statistics', query)['total expense'] }}</td>
+        </tr>
+    </table>
+    </center>
+</div>
+{% endif %}
+<br>
+<br>
+<div>
+    <h1 style="font-size: 20px; border-left: 6px solid black; background-color: #e5e2e2; width: 150px; padding: 2px">Search document</h1>
+    <form method="POST" action="">
+        <div>
+            <div class="mod_row">
+                <p><strong>Month</strong></p>
+            </div>
+            <div class="mod_row">
+                <input type = "text" name = "month_d" class="row" placeholder="es. January">
+            </div>
+        </div>
+        <div>
+            <div class="mod_row">
+                <p><strong>Year</strong></p>
+            </div>
+            <div class="mod_row">
+                <input type = "text" name = "year_d" placeholder="es. 2020">
+            </div>
+        </div>
+        <div>
+            <div class="mod_row">
+                <p><strong>Expense</strong></p>
+            </div>
+            <div class="mod_row">
+                <input type="text" name="expense_d" placeholder="expense..">
+            </div>
+        </div>
+        <div>
+            <div class="mod_row">
+                <p><strong>Day</strong></p>
+            </div>
+            <div class="mod_row">
+                <input type="text" name="day_d" placeholder="day..">
+            </div>
+        </div>
+        <div>
+            <div class="mod_row">
+                <p><strong>Description</strong></p>
+            </div>
+            <div class="mod_row">
+                <input type="text" name="description_d" placeholder="description..">
+            </div>
+        </div>
+        <div style="padding: 5px">
+            <input type="submit" name="document" value="Submit Document Query">
+        </div>
+    </form>
+</div>
+{% if doc_search %}
+<div>
+    <center>
+        <table>
+        {% if coll_q %}
+            {% if single_value %}
+                <tr>
+                    <td class="t02"><strong>{{ coll_q }}</strong></td>
+                </tr>
+                {% for doc in doc_q %}
+                <tr>
+                    <td class="t02">{{ doc['expense'] }} </td>
+                    <td class="t02">{{ doc['day'] }} </td>
+                    <td class="t02">{{ doc['description'] }} </td>
+                    <td class="t02">{{ doc['time of insertion'] }} </td>
+                </tr>
+                {% endfor %}
+                <tr>
+                    <td class="t02"><strong>Global:</strong></td>
+                    <td class="t02">{{ glob_q['month'] }}{{ glob_q['year'] }}</td>
+                    <td class="t02">{{ glob_q['total expense'] }}</td>
+                </tr>
+            {% else %}
+                {% for coll in coll_q %}
+                <tr>
+                    <td class="t02"><strong>{{ coll }}</strong></td>
+                </tr>
+                {% for doc in doc_q[coll] %}
+                <tr>
+                    <td class="t02">{{ doc['expense'] }}</td>
+                    <td class="t02">{{ doc['day'] }}</td>
+                    <td class="t02">{{ doc['description'] }}</td>
+                    <td class="t02">{{ doc['time of insertion'] }}</td>
+                </tr>
+                {% endfor %}
+                {% endfor %}
+                {% for doc in glob_q %}
+                    <tr>
+                        <td class="t02"><strong>Global: </strong></td>
+                        <td class="t02">{{ doc['month'] }}{{ doc['year'] }}</td>
+                        <td class="t02">{{ doc['total expense'] }}</td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+        {% endif %}
+        </table>
+    </center>
+</div>
+{% endif %}
+</body>
+</html>

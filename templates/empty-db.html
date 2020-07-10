@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Empty database</title>
+</head>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<body>
+<div style="text-align:center">
+    <a href="../" class="home">Home</a>
+</div>
+<div>
+    <center>
+        <h1>Oops! Looks like your database is still empty {{ username }}</h1>
+    </center>
+</div>
+<div>
+    <h3 style="font-size: 20px">Head over to <a href="../{{ username }}/modify" class="index_text">insert mode</a> to start adding your expenses</h3>
+</div>
+</body>
+</html>

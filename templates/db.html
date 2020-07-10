@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+    table, th, td {
+            border: 2px solid black;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 2px;
+            text-aling: left;
+        }
+    </style>
+    <meta charset="UTF-8">
+    <title>db</title>
+</head>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<body>
+    <div style="text-align:center">
+        <a href="../" class="home">Home</a>
+    </div>
+    <div class="row">
+        <table>
+            <tr>
+                <th class="db_table">MONTH</th>
+                <th class="db_table">EXPENSE</th>
+                <th class="db_table">DAY</th>
+                <th class="db_table">DESCRIPTION</th>
+                <th class="db_table">TIME OF INSERTION</th>
+            </tr>
+        {% for coll in sorted_database %}
+            {% if coll != 'Global_Statistics' %}
+                <tr>
+                    {% if database.count_docs(coll) > 0 %}
+                        <th rowspan="{{ database.count_docs(coll) }}" class="db_table">{{ coll }}</th>
+                    {% endif %}
+                {% for doc in database.find_doc(coll, find_all=True) %}
+                    <td class="t01">{{ doc['expense'] }}</td>
+                    <td class="t01">{{ doc['day'] }}</td>
+                    <td class="t01">{{ doc['description'] }}</td>
+                    <td class="t01">{{ doc['time of insertion'] }}</td>
+                </tr>
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
+        </table>
+    </div>
+    <div class="col">
+        <button onclick="plot()" class="button">
+                plot the last 3 months
+        </button>
+    </div>
+    <div class="col" id="plot"></div>
+    <ul>
+        <li><a href="./modify" class="index_text">Go to insert/delete mode</a></li>
+        <li><a href="./global-statistics" class="index_text">Show global statistics</a></li>
+    </ul>
+<script>
+    function plot() {
+        var list = document.getElementById("plot");
+        if (list.hasChildNodes()) {
+            list.removeChild(list.childNodes[0]);
+        }
+        var img = new Image();
+        img.src = 'data:image/png;base64, {{ data }}';
+        document.getElementById('plot').appendChild(img);
+        }
+</script>
+</body>
+</html>

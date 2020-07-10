@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>modify</title>
+</head>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<body>
+<div style="text-align:center">
+    <a href="../" class="home">Home</a>
+</div>
+<div class="info">
+    <p><strong>Info:</strong> date has to be in format "Month" and full year ex."2020"</p>
+    <p><strong>Info:</strong> all fields must be filled in order to execute a delete query</p>
+</div>
+<div>
+    <center>
+    <form method="POST" action="">
+        <div>
+            <div class="mod_row">
+                <p class="modify-text">Month</p>
+            </div>
+            <div class="mod_row">
+                <input type = "text" name = "month" class="row" placeholder="es. January">
+            </div>
+        </div>
+        <div>
+            <div class="mod_row">
+                <p class="modify-text">Year</p>
+            </div>
+            <div class="mod_row">
+                <input type = "text" name = "year" placeholder="es. 2020">
+            </div>
+        </div>
+        <div>
+            <div class="mod_row">
+                <p class="modify-text">Expense</p>
+            </div>
+            <div class="mod_row">
+                <input type="text" name="expense" placeholder="expense..">
+            </div>
+        </div>
+        <div>
+            <div class="mod_row">
+                <p class="modify-text">Day</p>
+            </div>
+            <div class="mod_row">
+                <input type="text" name="day" placeholder="day..">
+            </div>
+        </div>
+        <div>
+            <div class="mod_row">
+                <p class="modify-text">Description</p>
+            </div>
+            <div class="mod_row">
+                <input type="text" name="description" placeholder="description..">
+            </div>
+        </div>
+        <div style="padding: 5px">
+            <input type="submit" name="insert" value="Submit Insert Query">
+            <input type="submit" name="delete" value="Submit Delete Query">
+        </div>
+    </form>
+    </center>
+</div>
+{% if submitted %}
+<div class="text">
+    {% if insert %}
+        <p>Inserting into the collection:<strong>{{ coll }}</strong> the following query:</p>
+    {% else %}
+        {% if valid %}
+            <p>Deleting from the collection:<strong>{{ coll }}</strong> the following query:</p>
+        {% else %}
+            <h1> *** WARNING *** </h1>
+            <p>Could not find in the collection:<strong>{{ coll }}</strong> the following query:</p>
+        {% endif %}
+    {% endif %}
+    <p>expense: <strong>{{ inserted['expense'] }}</strong></p>
+    <p>day: <strong>{{ inserted['day'] }}</strong></p>
+    <p>description: <strong>{{ inserted['description'] }}</strong></p>
+    <p>time of insertion: <strong>{{ inserted['time of insertion'] }}</strong></p>
+</div>
+{% endif %}
+<ul>
+    <li><a href="./database" class="index_text">Bring me to my database</a></li>
+    <li><a href="./global-statistics" class="index_text">Show global statistics</a></li>
+</ul>
+</body>
+</html>

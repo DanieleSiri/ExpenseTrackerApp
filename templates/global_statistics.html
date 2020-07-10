@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        table, th, td {
+            border: 2px solid black;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 2px;
+            text-aling: left;
+        }
+    </style>
+    <meta charset="UTF-8">
+    <title>Global Statistics</title>
+</head>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<body>
+<div style="text-align:center">
+    <a href="../" class="home">Home</a>
+</div>
+<div class="wrapper">
+    <table>
+        <tr>
+            <th align="center">Plot</th>
+            <th>Month</th>
+            <th>Total expense</th>
+        </tr>
+        <tr>
+        <td rowspan="{{ doc_num }}" align="center"><img src='data:image/png;base64, {{ data }}'/></td>
+        {% for doc in documents %}
+            <tr id="t01">
+                <td>{{ doc['month'] }}{{ doc['year'] }}</td>
+                <td>{{ doc['total expense'] }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+<ul>
+    <li><a href="./modify" class="index_text">Go to insert/delete mode</a></li>
+    <li><a href="./database" class="index_text">Bring me to my database</a></li>
+</ul>
+</body>
+</html>

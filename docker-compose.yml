@@ -1,0 +1,43 @@
+version: '3.1'
+
+services:
+        mongo:
+                image: mongo
+                restart: always
+                environment:
+                        MONGO_INITDB_ROOT_USERNAME: "default"
+                        MONGO_INITDB_ROOT_PASSWORD: "password"
+                networks: 
+                 - expense_net
+        expense:
+                build:
+                        context: .
+                        dockerfile: Dockerfile
+                image: expense_tracker
+                environment:
+                        expense_username: "default"
+                        expense_password: "password"
+                depends_on: 
+                 - mongo
+                networks: 
+                 - expense_net
+                volumes:
+                 - /usr/share/mongo_data:/data/db
+        nginx:
+                build:
+                        context: .
+                        dockerfile: Dockerfile-nginx
+                ports:
+                 - 5000:80
+                depends_on:
+                 - expense
+                networks:
+                 - expense_net
+
+
+networks:
+        expense_net:
+                driver: bridge
+volumes:
+        mongo_data:
+                driver: local
