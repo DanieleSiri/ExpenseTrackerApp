@@ -9,6 +9,8 @@ services:
                         MONGO_INITDB_ROOT_PASSWORD: "password"
                 networks: 
                  - expense_net
+                volumes:
+                 - mongo_data:/data/db
         expense:
                 build:
                         context: .
@@ -21,8 +23,6 @@ services:
                  - mongo
                 networks: 
                  - expense_net
-                volumes:
-                 - /usr/share/mongo_data:/data/db
         nginx:
                 build:
                         context: .
